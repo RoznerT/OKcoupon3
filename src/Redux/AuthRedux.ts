@@ -46,7 +46,7 @@ export function AuthReducer(
 
   switch (action.type) {
     case ActionType.ADMIN_LOGIN:
-      
+      newState.jwt=action.payload;
       break;
 
     case ActionType.COMPANY_LOGIN:

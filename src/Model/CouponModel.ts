@@ -1,4 +1,5 @@
 export class couponModel {
+  
   public id: number = 0;
   public companyName: string = "";
   public category: string = "";
@@ -9,4 +10,5 @@ export class couponModel {
   public amount: number = 0;
   public price: number = 0;
   public image: string = "";
+  
 }

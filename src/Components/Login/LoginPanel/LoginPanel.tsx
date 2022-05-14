@@ -32,16 +32,7 @@ function LoginPanel(props: LoginProps) {
   const onSubmit = (data: any) => {
     switch (props.clientType) {
       case "CUSTOMER":
-      /*
-            tryCustomerLogin(data.userName,data.userPass);
-            break
 
-
-            case "COMPANY":
-                tryCompanyLogin(data.userName,data.userPass)
-
-                break
-*/
       case "ADMIN":
         const url = "http://localhost:8080/administrator/Login";
         console.log(data);
@@ -50,11 +41,9 @@ function LoginPanel(props: LoginProps) {
             notify.error("Bad login");
             return;
           }
-          //history.push("/");
+          
           console.log(res.data);
-          //store.dispatch(res.data); /********************/
           store.dispatch(tryAdminLogin(res.data.payload))
-          //console.log(store.getState)
           //setJWT(store.getState().authState.jwt);
           history.push("/");
         });

@@ -6,4 +6,5 @@ export enum ActionType {
     LOGOUT = "logout",
     FAILED_LOGIN = "failedLogin",
     JWT_UPDATE = "JwtUpdate",
+    GET_ALL_COUPONS_GUEST = "getAllCouponsGuest",
 }
