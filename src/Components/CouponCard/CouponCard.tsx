@@ -1,3 +1,4 @@
+/*
 import { couponModel } from "../../Model/CouponModel";
 import "./CouponCard.css";
 
@@ -24,3 +25,4 @@ function CouponCard(props: CouponCardProps): JSX.Element {
 }
 
 export default CouponCard;
+*/

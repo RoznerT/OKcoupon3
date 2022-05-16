@@ -1,3 +1,4 @@
+/*
 import { CouponAction } from "../Actions/Actions/CouponActions";
 import { ActionType } from "../Actions/ActionType";
 import { couponModel } from "../Model/CouponModel";
@@ -24,3 +25,4 @@ export function couponsReducer(
 
   return newState;
 }
+*/
