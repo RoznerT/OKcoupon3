@@ -1,11 +1,13 @@
+import { useCallback } from "react";
 import { ActionType } from "../Actions/ActionType";
+import MenuFunc from "../Components/MainArea/Menu/src/Components/MenuFunc/MenuFunc";
 import { UserCred } from "../Model/UserCred";
 
 //app state
 export class AuthState {
   public userName: string = "";
   //public userPass: string = "";
-  //public clientType: string = "";
+  public clientType: string = "";
   public jwt: string = "";
 }
 
@@ -24,11 +26,11 @@ export function tryCustomerLogin(cred: UserCred): AuthAction {
   return { type: ActionType.CUSTOMER_LOGIN, payload: cred };
 }
 
-function tryCompanyLoginLogin(cred: UserCred): AuthAction {
+export function tryCompanyLogin(cred: UserCred): AuthAction {
   return { type: ActionType.COMPANY_LOGIN, payload: cred };
 }
 
-function tryLogout(): AuthAction {
+export function tryLogout(): AuthAction {
   return { type: ActionType.LOGOUT, payload: null };
 }
 
@@ -47,20 +49,23 @@ export function AuthReducer(
   switch (action.type) {
     case ActionType.ADMIN_LOGIN:
       newState.jwt=action.payload;
+      newState.clientType = "ADMIN";
       break;
 
     case ActionType.COMPANY_LOGIN:
-      //do somthing
+      newState.jwt=action.payload;
+      newState.clientType = "COMPANY";
 
       break;
 
     case ActionType.CUSTOMER_LOGIN:
-      //do somthing
+      newState.jwt=action.payload;
+      newState.clientType = "CUSTOMER";
 
       break;
 
     case ActionType.LOGOUT:
-      //newState.jwt = "";
+      newState.jwt = "";
 
       break;
 

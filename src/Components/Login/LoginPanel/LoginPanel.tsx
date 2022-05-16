@@ -12,7 +12,7 @@ import notify from "../../../Utils/Notify";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import store from "../../../Redux/store";
-import { AuthReducer, tryAdminLogin } from "../../../Redux/AuthRedux";
+import { AuthReducer, tryAdminLogin, tryCompanyLogin, tryCustomerLogin } from "../../../Redux/AuthRedux";
 import { ActionType } from "../../../Actions/ActionType";
 
 interface LoginProps {
@@ -29,17 +29,49 @@ function LoginPanel(props: LoginProps) {
   const history = useHistory();
   const [jwt, setJWT] = useState("no token");
   
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: any ) => {
     switch (props.clientType) {
       case "CUSTOMER":
+        const customer_url = "http://localhost:8080/customer/Login";
+        console.log(data);
+        axios.post(customer_url, data).then((res) => {
+          console.log(res);
+          if (res.data.length < 0) {
+            notify.error("Bad login");
+            return ;
+          }
+          
+          console.log(res.data);
+          store.dispatch(tryCustomerLogin(res.data.payload))
+          //setJWT(store.getState().authState.jwt);
+          history.push("/");
+        });
+        break;
+
+        case "COMPANY":
+        const company_url = "http://localhost:8080/company/Login";
+        console.log(data);
+        axios.post(company_url, data).then((res) => {
+          console.log(res);
+          if (res.data.length < 0) {
+            notify.error("Bad login");
+            return ;
+          }
+          
+          console.log(res.data);
+          store.dispatch(tryCompanyLogin(res.data.payload))
+          //setJWT(store.getState().authState.jwt);
+          history.push("/");
+        });
+        break;
 
       case "ADMIN":
-        const url = "http://localhost:8080/administrator/Login";
+        const admin_url = "http://localhost:8080/administrator/Login";
         console.log(data);
-        axios.post(url, data).then((res) => {
+        axios.post(admin_url, data).then((res) => {
           if (res.data.length < 3) {
             notify.error("Bad login");
-            return;
+            return ;
           }
           
           console.log(res.data);
@@ -75,6 +107,7 @@ function LoginPanel(props: LoginProps) {
           />
           {errors.userPass && <p>{errors.userPass.message}</p>}
           <br />
+          
           <TextField
             {...register("clientType", {
               setValueAs: (value: any) => props.clientType,

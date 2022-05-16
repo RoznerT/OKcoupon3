@@ -1,6 +1,8 @@
-import axios from "axios";
+import { ExitToAppSharp } from "@mui/icons-material";
+import axios, { AxiosError } from "axios";
+import { setDefaultResultOrder } from "dns";
 import { url } from "inspector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CouponModel } from "../../Model/CouponModel";
 import { CouponAppState } from "../../Redux/CouponRedux";
 import CouponCard from "../Coupon/CouponCard/CouponCard";
@@ -32,3 +34,5 @@ function HomePage(): JSX.Element {
 }
 
 export default HomePage;
+
+
