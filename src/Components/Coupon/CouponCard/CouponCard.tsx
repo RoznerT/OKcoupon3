@@ -1,10 +1,10 @@
-/*
-import { couponModel } from "../../Model/CouponModel";
+
+import { CouponModel } from "../../../Model/CouponModel";
 import "./CouponCard.css";
 
 
 interface CouponCardProps {
-	coupon: couponModel;
+	coupon: CouponModel;
 }
 
 function CouponCard(props: CouponCardProps): JSX.Element {
@@ -25,4 +25,3 @@ function CouponCard(props: CouponCardProps): JSX.Element {
 }
 
 export default CouponCard;
-*/

@@ -12,7 +12,7 @@ export class CouponModel {
   public image: string = "";
   
 }
-
+/*
 export class CouponsAppState {
   public coupons: CouponModel[] = [];
 }
@@ -67,4 +67,4 @@ export function couponsReducer(currentState: CouponsAppState = new CouponsAppSta
   }
   return newState;
   
-}
+}*/

@@ -1,6 +1,6 @@
 import { combineReducers, createStore } from "redux";
-import { couponsReducer } from "../Model/CouponModel";
 import { AuthReducer, AuthState } from "./AuthRedux";
+import { couponsReducer } from "./CouponRedux";
 
 //multiplicate reducers
 //we will put here all our reducers :)

@@ -1,13 +1,13 @@
-/*
+
 import { CouponAction } from "../Actions/Actions/CouponActions";
 import { ActionType } from "../Actions/ActionType";
-import { couponModel } from "../Model/CouponModel";
+import { CouponModel } from "../Model/CouponModel";
 
 export class CouponAppState {
-  public coupons: couponModel[] = [];
+  public coupons: CouponModel[] = [];
 }
 
-export function tryGetAllCouponsGuest(coupons: couponModel[]): CouponAction {
+export function tryGetAllCouponsGuest(coupons: CouponModel[]): CouponAction {
   return { type: ActionType.GET_ALL_COUPONS_GUEST, payload: coupons };
 }
 
@@ -25,4 +25,3 @@ export function couponsReducer(
 
   return newState;
 }
-*/
