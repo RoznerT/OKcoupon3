@@ -6,7 +6,7 @@ import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Menu from "../Menu/Menu";
-import MenuFunc from "../Menu/src/Components/MenuFunc/MenuFunc";
+import MenuFunc from "../Menu/MenuFunc/MenuFunc";
 import "./Layout.css";
 
 //const [clientType, setClientType] = useState<string>("CUSTOMER");
@@ -27,7 +27,7 @@ class Layout extends Component {
           
           <aside>
       
-            <MenuFunc />
+            <MenuFunc clientType={store.getState().authState.clientType}/>
           </aside>
 
           <main>
