@@ -11,23 +11,10 @@ import "./HomePage.css";
 function HomePage(): JSX.Element {
   const [couponList, setCoupons] = useState<CouponModel[]>([]);
   console.log("step 1")
-
-  const getDefaultHomePage = () => {
-    console.log("step 2")
-    const url = "http://localhost:8080/guest/allCouponsInSystem";
-    axios
-      .get<CouponModel[]>(url)
-      .then((response) => {
-        console.log(response.data)
-        setCoupons(response.data);
-      })
-      .catch((error) => {});
-      console.log("step 3 in catch")
-
-  };
+  getDefaultHomePage(setCoupons)
   return( <div className="HomePage">
        <h1>Coupons List</h1>
-       <button onClick={getDefaultHomePage}>Watch All Coupons </button>
+       <button >Watch All Coupons </button>
        <hr/>
         {couponList.map(item=><CouponCard coupon={item}/>)}
   </div>)
@@ -35,4 +22,18 @@ function HomePage(): JSX.Element {
 
 export default HomePage;
 
+
+const getDefaultHomePage = (setCoupons: React.Dispatch<React.SetStateAction<CouponModel[]>>) => {
+  console.log("step 2")
+  const url = "http://localhost:8080/guest/allCouponsInSystem";
+  axios
+    .get<CouponModel[]>(url)
+    .then((response) => {
+      console.log(response.data)
+      setCoupons(response.data);
+    })
+    .catch((error) => {});
+    console.log("step 3 in catch")
+
+};
 

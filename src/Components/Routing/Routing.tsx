@@ -11,8 +11,8 @@ function Routing(): JSX.Element {
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/home" component={HomePage} exact />
-        <Route path="/" component={HomePage} exact />
         <Route path="/logout" component={Main} exact />
+        <Route path="/" component={HomePage} exact />
         <Redirect from="/" to="/home" exact />
         <Route component={PageNotFound} />
       </Switch>

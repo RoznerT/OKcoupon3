@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { ActionType } from "../Actions/ActionType";
-import MenuFunc from "../Components/MainArea/Menu/MenuFunc/MenuFunc";
 import { UserCred } from "../Model/UserCred";
 
 //app state
