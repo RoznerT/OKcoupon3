@@ -6,7 +6,6 @@ import { State } from "../../../Redux/store";
 import "./Menu.css";
 import CustomerMenu from './CustomerMenu'
 
-
 function Menu() {
     const clientType = useSelector((state: State) => state.authState.clientType) 
     //switch --> html element

@@ -10,7 +10,6 @@ import "./HomePage.css";
 
 function HomePage(): JSX.Element {
   const [couponList, setCoupons] = useState<CouponModel[]>([]);
-  console.log("step 1")
   getDefaultHomePage(setCoupons)
   return( <div className="HomePage">
        <h1>Coupons List</h1>
@@ -23,7 +22,7 @@ function HomePage(): JSX.Element {
 export default HomePage;
 
 
-const getDefaultHomePage = (setCoupons: React.Dispatch<React.SetStateAction<CouponModel[]>>) => {
+export const getDefaultHomePage = (setCoupons: React.Dispatch<React.SetStateAction<CouponModel[]>>) => {
   console.log("step 2")
   const url = "http://localhost:8080/guest/allCouponsInSystem";
   axios

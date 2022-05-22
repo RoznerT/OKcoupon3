@@ -15,8 +15,7 @@ const store = configureStore({
 });
 
 
-//const xyz = store.getState().catState.cats;
-
+//to get the state of state
 export type State = ReturnType<typeof store.getState>
 
 export default store;
