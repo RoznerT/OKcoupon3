@@ -1,10 +1,18 @@
 .Header {
+  /*
   text-align: center;
   margin-left: 5%;
   color: rgb(229, 184, 157);
   letter-spacing: 5px;
   line-height: 0.8;
-  text-shadow: 1px 1px 2px rgb(250, 228, 228), 0 0 25px rgb(215, 228, 36), 0 0 5px darkblue;
+  /*text-shadow: 1px 1px 2px rgb(250, 228, 228), 0 0 25px rgb(215, 228, 36), 0 0 5px darkblue;*/
+  text-align: left;
+  margin-top: 1%;
+  margin-left: 0%;
+  color: rgb(240, 234, 231);
+  text-size-adjust: 50px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 45px;
 }
 
 
@@ -18,4 +26,13 @@
 #logoutt {
   text-align: right;
   margin-top: 1%;
+}
+
+#title {
+  text-align: center;
+  margin-top: 1%;
+  margin-left: 0%;
+  color: rgb(240, 234, 231);
+
+  font-family: 'Courier New', Courier, monospace;
 }

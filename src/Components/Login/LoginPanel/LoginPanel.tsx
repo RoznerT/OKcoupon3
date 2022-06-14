@@ -5,16 +5,18 @@ import {
   Box,
   Button,
   Container,
+  Menu,
   TextField,
   Typography,
 } from "@material-ui/core";
 import notify from "../../../Utils/Notify";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import store from "../../../Redux/store";
 import { AuthReducer, tryAdminLogin, tryCompanyLogin, tryCustomerLogin } from "../../../Redux/AuthRedux";
 import { ActionType } from "../../../Actions/ActionType";
-
+import { AuthState } from '../../../Redux/AuthRedux'
+import globals from "../../../Utils/globals";
 interface LoginProps {
   children?: JSX.Element;
   clientType: string;
@@ -27,58 +29,68 @@ function LoginPanel(props: LoginProps) {
     handleSubmit,
   } = useForm();
   const history = useHistory();
-  const [jwt, setJWT] = useState("no token");
   
   const onSubmit = (data: any ) => {
+    const newData = {...data, clientType:props.clientType}
     switch (props.clientType) {
       case "CUSTOMER":
-        const customer_url = "http://localhost:8080/customer/Login";
-        console.log(data);
-        axios.post(customer_url, data).then((res) => {
-          console.log(res);
-          if (res.data.length < 0) {
-            notify.error("Bad login");
-            return ;
-          }
-          
+        console.log(newData);
+        axios.post(globals.urls.customerLogin, newData).then((res) => {  
+          const userInfo: AuthState = {
+            userName: data.userName,
+            clientType: data.clientType,
+            jwt: (res.headers[`authorization`])
+          }        
           console.log(res.data);
-          store.dispatch(tryCustomerLogin(res.data.payload))
-          //setJWT(store.getState().authState.jwt);
-          history.push("/");
-        });
+          //store.dispatch(tryCustomerLogin(userInfo))
+          localStorage.setItem('token', (res.headers[`authorization`]));
+          localStorage.setItem('clientType', data.clientType);
+
+          history.push("/customer");
+        }).catch(response=>{
+          console.error(response.data);
+          console.error(response.status);
+          //notify.error(response.data.description);
+      });
         break;
 
         case "COMPANY":
-        const company_url = "http://localhost:8080/company/Login";
-        console.log(data);
-        axios.post(company_url, data).then((res) => {
-          console.log(res);
-          if (res.data.length < 0) {
-            notify.error("Bad login");
-            return ;
+        console.log(newData);
+        axios.post(globals.urls.companyLogin, newData).then((res) => {
+          const userInfo: AuthState = {
+            userName: data.userName,
+            clientType: data.clientType,
+            jwt: (res.headers[`authorization`])
           }
-          
           console.log(res.data);
-          store.dispatch(tryCompanyLogin(res.data.payload))
-          //setJWT(store.getState().authState.jwt);
-          history.push("/");
-        });
+          //store.dispatch(tryCompanyLogin(userInfo))
+          localStorage.setItem('token', (res.headers[`authorization`]));
+          localStorage.setItem('clientType', data.clientType);
+          history.push("/company");
+        }).catch(response=>{
+          console.error(response.data);
+          console.error(response.status);
+      });
         break;
 
       case "ADMIN":
-        const admin_url = "http://localhost:8080/administrator/Login";
-        console.log(data);
-        axios.post(admin_url, data).then((res) => {
-          if (res.data.length < 3) {
-            notify.error("Bad login");
-            return ;
+        console.log(newData);
+        axios.post(globals.urls.adminLogin, newData).then((res) => {
+          const userInfo: AuthState = {
+            userName: data.userName,
+            clientType: data.clientType,
+            jwt: res.headers[`authorization`]
           }
-          
-          console.log(res.data);
-          store.dispatch(tryAdminLogin(res.data.payload))
-          //setJWT(store.getState().authState.jwt);
-          history.push("/");
-        });
+          //store.dispatch(tryAdminLogin(userInfo))
+          localStorage.setItem('token', res.headers[`authorization`]);
+          localStorage.setItem('clientType', data.clientType);
+          history.push("/admin");
+        }).catch(error=>{
+          console.log(error.response.data)
+          console.log(error.response.data.description)
+          console.error(error.response.status);
+          //notify.error(error.response.data.description);
+      })
         break;
 
       default:
@@ -100,7 +112,7 @@ function LoginPanel(props: LoginProps) {
           <TextField
             {...register("userPass", {
               required: "this is required",
-              minLength: { value: 4, message: "Min length is 4" },
+              //minLength: { value: 4, message: "Min length is 4" },
             })}
             label="Password"
             variant="standard"
@@ -108,15 +120,7 @@ function LoginPanel(props: LoginProps) {
           {errors.userPass && <p>{errors.userPass.message}</p>}
           <br />
           
-          <TextField
-            {...register("clientType", {
-              setValueAs: (value: any) => props.clientType,
-            })}
-            label="UserType"
-            variant="standard"
-          />
-          <br />
-          <br />
+          
           <Button type="submit">Login</Button>
         </form>
       </Box>
@@ -125,3 +129,15 @@ function LoginPanel(props: LoginProps) {
 }
 
 export default LoginPanel;
+
+/*
+<TextField
+            {...register("clientType", {
+              required: "this is required",
+              
+            })}
+            label="clientType"
+            variant="standard"
+          />
+          <br />
+          */

@@ -1,6 +1,4 @@
-import { useCallback } from "react";
 import { ActionType } from "../Actions/ActionType";
-import { UserCred } from "../Model/UserCred";
 
 //app state
 export class AuthState {
@@ -17,15 +15,15 @@ export interface AuthAction {
 }
 
 //functions for different actions
-export function tryAdminLogin(cred: UserCred): AuthAction {
+export function tryAdminLogin(cred: AuthState): AuthAction {
   return { type: ActionType.ADMIN_LOGIN, payload: cred };
 }
 
-export function tryCustomerLogin(cred: UserCred): AuthAction {
+export function tryCustomerLogin(cred: AuthState): AuthAction {
   return { type: ActionType.CUSTOMER_LOGIN, payload: cred };
 }
 
-export function tryCompanyLogin(cred: UserCred): AuthAction {
+export function tryCompanyLogin(cred: AuthState): AuthAction {
   return { type: ActionType.COMPANY_LOGIN, payload: cred };
 }
 
@@ -33,7 +31,7 @@ export function tryLogout(): AuthAction {
   return { type: ActionType.LOGOUT, payload: null };
 }
 
-function tryJwtUpdate(jwt: string): AuthAction {
+export function tryJwtUpdate(jwt: string): AuthAction {
   return { type: ActionType.JWT_UPDATE, payload: jwt };
 }
 
@@ -44,33 +42,52 @@ export function AuthReducer(
 ): AuthState {
   //get a copy of current state
   const newState = { ...currentState };
-
   switch (action.type) {
     case ActionType.ADMIN_LOGIN:
-      newState.jwt=action.payload;
+      newState.userName=action.payload.userName;
+      newState.jwt=action.payload.jwt;
       newState.clientType = "ADMIN";
+      const userLogged = {
+        userName: action.payload.userName,
+        jwt: action.payload.jwt,
+        clientType: "ADMIN",
+      }
+      localStorage.setItem('token', action.payload.jwt)
+      localStorage.setItem('clientType', "ADMIN")
+      //localStorage.setItem('userLogged', JSON.stringify(userLogged))
+      /*
+      const userData = JSON.parse(localStorage.getItem('userLogged')!);
+      console.log('userData: ', userData.jwt)
+      */
       break;
 
     case ActionType.COMPANY_LOGIN:
-      newState.jwt=action.payload;
+      newState.userName = action.payload.userName;
+      newState.jwt=action.payload.jwt;
       newState.clientType = "COMPANY";
-
+      localStorage.setItem('token', action.payload.jwt)
+      localStorage.setItem('clientType', "COMPANY")
       break;
 
     case ActionType.CUSTOMER_LOGIN:
-      newState.jwt=action.payload;
+      newState.userName = action.payload.userName;
+      newState.jwt=action.payload.jwt;
       newState.clientType = "CUSTOMER";
-
+      localStorage.setItem('token', action.payload.jwt)
+      localStorage.setItem('clientType', "CUSTOMER")
       break;
 
     case ActionType.LOGOUT:
-      newState.jwt = "";
-
+      newState.jwt = "user Logged out";
+      localStorage.setItem('token', "user Logged out");
+      localStorage.setItem('clientType', "guest");
+      //localStorage.setItem('userLogged', JSON.stringify(action.payload))
       break;
 
     case ActionType.JWT_UPDATE:
-      //newState.jwt = action.payload;
-      //console.log("redux have a new JWT token");
+      newState.jwt=action.payload.jwt;
+      newState.clientType="guest";
+      localStorage.setItem('token', action.payload.jwt)
       break;
   }
 

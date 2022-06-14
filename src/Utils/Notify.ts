@@ -15,5 +15,5 @@ class Notify{
 
 //create instance of our Notify Class
 const notify = new Notify();
-//expose our new shiny class to the world
+
 export default notify;

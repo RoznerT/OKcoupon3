@@ -14,8 +14,14 @@ const store = configureStore({
     }
 });
 
-
 //to get the state of state
 export type State = ReturnType<typeof store.getState>
 
 export default store;
+
+
+//store.subscribe(() => {saveState(store.getState())})
+
+// function saveState(arg0: { authState: AuthState; couponState: import("./CouponRedux").CouponAppState; }) {
+//     throw new Error("Function not implemented.");
+// }

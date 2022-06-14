@@ -1,18 +1,25 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import HomePage from "../HomePage/HomePage";
+import HomePage from "../ClientsPages/GuestPage/HomePage/HomePage";
 import Login from "../Login/Login/Login";
-import Main from "../MainArea/Main/Main";
+import CompanyMenu from "../MainArea/Menu/CompanyMenu";
 import PageNotFound from "../NotFound/pageNotFound";
+import AdminPage from "../ClientsPages/AdminPage";
+import AdminMenu from "../MainArea/Menu/AdminMenu";
+import CompanyPage from "../ClientsPages/CompanyPage";
+import CustomerPage from "../ClientsPages/CustomerPage";
+import CustomerMenu from "../MainArea/Menu/CustomerMenu";
 
 function Routing(): JSX.Element {
   return (
     <div className="Routing">
-      <Switch>
+      <Switch> 
+        <Route path="/customer" component={CustomerPage} /> 
+        <Route path="/admin" component={AdminPage} />
+        <Route path="/company" component={CompanyPage} />
         <Route path="/login" component={Login} />
+        <Route path="/logout" component={HomePage} />
         <Route path="/home" component={HomePage} exact />
-        <Route path="/logout" component={Main} exact />
-        <Route path="/" component={HomePage} exact />
         <Redirect from="/" to="/home" exact />
         <Route component={PageNotFound} />
       </Switch>
