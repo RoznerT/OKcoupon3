@@ -1,0 +1,17 @@
+.CouponCard {
+  display: inline-flex;
+  align-items: center;
+  padding-right: 0;
+}
+
+.CouponCard img {
+  width: 155px;
+  height: 75px;
+  border-radius: 10px;
+  border: 1px solid black;
+  vertical-align: middle;
+}
+
+.CouponCard > div:nth-child(2) {
+  margin-left: auto;
+}

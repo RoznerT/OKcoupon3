@@ -1,40 +1,38 @@
 .layout {
-	height: 100%;
-    box-sizing: border-box; /* fix css size bug/feature */
-    display: grid;
-    grid-template-columns: 50px 50px 50px 50px;
-    grid-template-rows: 120px 60px 2000px 50px;
-    /*grid-template-rows: 7% 95% 3%;*/
-    /*grid-template-columns: repeat(6, 1fr); /* fr = fraction */
+  height: 100%;
+  box-sizing: border-box; /* fix css size bug/feature */
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px;
+  grid-template-rows: 120px 60px 2000px 50px;
+  /*grid-template-rows: 7% 95% 3%;*/
+  /*grid-template-columns: repeat(6, 1fr); /* fr = fraction */
 }
 
- .layout>footer{
-    grid-column: span 6;
-    /*color:black ;*/
-    font-size:medium ;
-    background-color:rgb(13, 11, 14);
-    /*position: absolute;*/
-    border: 2px solid black;
+.layout > footer {
+  grid-column: span 6;
+  font-size: medium;
+  background-color: rgb(13, 11, 14);
+  /*position: absolute;*/
+  border: 2px solid black;
 }
 
-.layout>header{
-    grid-column: span 6;
-    background-color: rgb(59, 2, 112);
-    color: aliceblue;
-    border: 1px solid black;
+.layout > header {
+  grid-column: span 6;
+  background-color: rgb(59, 2, 112);
+  color: aliceblue;
+  border: 1px solid black;
 }
 
-.layout>aside{
-    grid-column: span 6;
-    background-color:rgb(236, 236, 229);
-    border: 1px solid black;
+.layout > aside {
+  grid-column: span 6;
+  background-color: rgb(236, 236, 229);
+  border: 1px solid black;
 }
 
-.layout>main{
-    grid-column: span 6;
+.layout > main {
+  grid-column: span 6;
 }
 
-.layout,.layout>*{
-    /*border: 1px solid black;*/
+.layout,
+.layout > * {
 }
-

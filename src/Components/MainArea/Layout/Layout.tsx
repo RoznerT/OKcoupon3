@@ -1,4 +1,4 @@
-import { Component, useState } from "react";
+import { Component } from "react";
 import { BrowserRouter } from "react-router-dom";
 import Routing from "../../Routing/Routing";
 import Footer from "../Footer/Footer";
