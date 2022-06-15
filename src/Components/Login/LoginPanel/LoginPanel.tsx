@@ -44,8 +44,9 @@ function LoginPanel(props: LoginProps) {
             };
             console.log(res.data);
             localStorage.setItem("token", res.headers[`authorization`]);
-            localStorage.setItem("clientType", data.clientType);
+            localStorage.setItem("clientType", newData.clientType);
             history.push("/customer");
+            window.location.reload();
           })
           .catch((response) => {
             console.error(response.data);
@@ -65,8 +66,9 @@ function LoginPanel(props: LoginProps) {
             };
             console.log(res.data);
             localStorage.setItem("token", res.headers[`authorization`]);
-            localStorage.setItem("clientType", data.clientType);
+            localStorage.setItem("clientType", newData.clientType);
             history.push("/company");
+            window.location.reload();
           })
           .catch((response) => {
             console.error(response.data);
@@ -85,8 +87,9 @@ function LoginPanel(props: LoginProps) {
               jwt: res.headers[`authorization`],
             };
             localStorage.setItem("token", res.headers[`authorization`]);
-            localStorage.setItem("clientType", data.clientType);
+            localStorage.setItem("clientType", newData.clientType);
             history.push("/admin");
+            window.location.reload();
           })
           .catch((error) => {
             console.log(error.response.data);

@@ -10,6 +10,7 @@ function Menu() {
   const checkRole = () => {
     setRole(localStorage.getItem("clientType")!);
   };
+  
   useEffect(() => {
     checkRole();
   }, [role]);
