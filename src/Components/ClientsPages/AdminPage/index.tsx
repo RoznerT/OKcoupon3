@@ -1,4 +1,5 @@
 import { Switch, Route } from "react-router-dom";
+import HomePage from "../GuestPage/HomePage/HomePage";
 import AddCompany from "./Actions/AddCompany";
 import AddCustomer from "./Actions/AddCustomer";
 import AllCompanies from "./Actions/AllCompanies";
@@ -17,6 +18,11 @@ function AdminPage({ match }: any) {
       <h1>Hello Administrator, please choose from the options above</h1>
 
       <Switch>
+      <Route
+          path={`${match.path}/home`}
+          exact
+          component={HomePage}
+        />
         <Route
           path={`${match.path}/allCompanies`}
           exact

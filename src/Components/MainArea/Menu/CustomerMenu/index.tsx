@@ -6,7 +6,18 @@ function CustomerMenu({ match }: RouteComponentProps) {
 
   return (
     <>
-      <br />
+    <br />
+      <Button
+        variant="contained"
+        size="medium"
+        onClick={() => {
+          history.push(`${match.url}/home`);
+          window.location.reload();
+        }}
+      >
+        Home
+      </Button>{" "}
+      &nbsp;
       <Button
         variant="outlined"
         size="small"
@@ -15,8 +26,8 @@ function CustomerMenu({ match }: RouteComponentProps) {
         }}
       >
         Watch Your Coupons
-      </Button>
-      &nbsp;&nbsp;&nbsp;
+      </Button>{" "}
+      &nbsp;
       <Button
         variant="outlined"
         size="small"
@@ -25,7 +36,7 @@ function CustomerMenu({ match }: RouteComponentProps) {
         }}
       >
         Customer Details
-      </Button>
+      </Button>{" "}
     </>
   );
 }

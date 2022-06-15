@@ -53,12 +53,12 @@ function AddCoupon() {
       <Box
         sx={{
           border: 2,
-          borderColor: "blue",
+          borderColor: "black",
           borderRadius: 2,
           gap: 2,
           bgcolor: "whitesmoke",
           boxShadow: 8,
-          width: 500,
+          width: 800,
           height: 820,
           align: "center",
           margin: "auto",
@@ -76,6 +76,7 @@ function AddCoupon() {
             variant="standard"
             placeholder="your company name"
           />
+          {errors.companyName && <span>{errors.companyName.message}</span>}
           <br />
           <br />
           <FormControl>
@@ -127,14 +128,18 @@ function AddCoupon() {
             variant="standard"
             placeholder="title of coupon"
           />
+          {errors.title && <span>{errors.title.message}</span>}
           <br />
           <SubtitlesIcon></SubtitlesIcon>
           <TextField
-            {...register("description", { required: "this is required" })}
+            {...register("description", { required: "this is required",
+            minLength: { value: 4, message: "Min length is 4" },
+          })}
             label="description"
             variant="standard"
             placeholder="more details about it"
           />
+          {errors.description && <span>{errors.description.message}</span>}
           <br />
           <CalendarMonthIcon></CalendarMonthIcon>
           <TextField
@@ -143,6 +148,7 @@ function AddCoupon() {
             variant="standard"
             placeholder="yyyy-mm-dd"
           />
+          {errors.startDate && <span>{errors.startDate.message}</span>}
           <br />
           <LockClockIcon></LockClockIcon>
           <TextField
@@ -151,6 +157,7 @@ function AddCoupon() {
             variant="standard"
             placeholder="yyyy-mm-dd"
           />
+          {errors.endDate && <span>{errors.endDate.message}</span>}
           <br />
           <InventoryIcon></InventoryIcon>
           <TextField
@@ -159,6 +166,7 @@ function AddCoupon() {
             variant="standard"
             placeholder="insert the max amount"
           />
+          {errors.amount && <span>{errors.amount.message}</span>}
           <br />
           <MonetizationOnIcon></MonetizationOnIcon>
           <TextField
@@ -167,6 +175,7 @@ function AddCoupon() {
             variant="standard"
             placeholder="00.00 format"
           />
+          {errors.price && <span>{errors.price.message}</span>}
           <br />
           <PhotoSizeSelectActualIcon></PhotoSizeSelectActualIcon>
           <TextField
@@ -175,11 +184,13 @@ function AddCoupon() {
             variant="standard"
             placeholder="insert link to the image"
           />
+          {errors.image && <span>{errors.image.message}</span>}
           <br />
           <br />
           <Button
             sx={{ color: "royalblue", border: 1, bgcolor: "grey" }}
             type="submit"
+            variant="outlined"
           >
             Submit
           </Button>

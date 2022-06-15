@@ -26,6 +26,7 @@ class DevelopmentGlobals extends Globals {
     allCustomerCoupons: "http://localhost:8080/customer/allCouponsCustomer",
     customerDetails: "http://localhost:8080/customer/customerDetails",
     purchaseCoupon: "http://localhost:8080/customer/newPurchase/",
+    register: "http://localhost:8080/guest/register"
   };
 }
 
@@ -55,6 +56,7 @@ class ProductionGlobals extends Globals {
     allCustomerCoupons: "/customer/allCouponsCustomer",
     customerDetails: "/customer/customerDetails",
     purchaseCoupon: "/customer/newPurchase/",
+    register: "/guest/register"
   };
 }
 

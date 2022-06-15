@@ -5,6 +5,7 @@ import globals from "../../../../Utils/globals";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import KeyIcon from "@mui/icons-material/Key";
+import notify from "../../../../Utils/Notify";
 function AddCompany() {
   const {
     register,
@@ -31,7 +32,7 @@ function AddCompany() {
         console.log(error.response.data);
         console.error(error.response.data);
         console.error(error.response.status);
-        //notify.error("bad login");
+        //notify.error(error.response.data);
       });
   };
 
@@ -40,12 +41,12 @@ function AddCompany() {
       <Box
         sx={{
           border: 2,
-          borderColor: "blue",
+          borderColor: "black",
           borderRadius: 2,
           gap: 2,
           bgcolor: "whitesmoke",
           boxShadow: 8,
-          width: 500,
+          width: 800,
           height: 250,
           align: "center",
           margin: "auto",
@@ -55,12 +56,16 @@ function AddCompany() {
           <Typography sx={{ fontWeight: "bold", color: "black" }}>
             Add Company Form
           </Typography>
+          <br/>
           <AccountCircleIcon style={{ color: "grey" }}></AccountCircleIcon>
           <TextField
-            {...register("email", { required: "this is required" })}
+            {...register("email", { required: "this is required",
+             minLength: { value: 4, message: "Min length is 4" }
+             })}
             label="email"
             variant="standard"
           />
+            {errors.email && <span>{errors.email.message}</span>}
           <br />
           <DriveFileRenameOutlineIcon
             style={{ color: "grey" }}
@@ -73,6 +78,7 @@ function AddCompany() {
             label="name"
             variant="standard"
           />
+          {errors.name && <span>{errors.name.message}</span>}
           <br />
           <KeyIcon style={{ color: "grey" }}></KeyIcon>
           <TextField
@@ -83,11 +89,12 @@ function AddCompany() {
             label="password"
             variant="standard"
           />
+          {errors.password && <span>{errors.password.message}</span>}
           <br />
           <br />
           <Button
-            sx={{ color: "royalblue", border: 1, bgcolor: "grey" }}
             type="submit"
+            variant="contained"
           >
             Submit
           </Button>

@@ -1,0 +1,29 @@
+.HeaderS {
+    text-align: left;
+    margin-top: 1%;
+    margin-left: 0%;
+    color: rgb(240, 234, 231);
+    text-size-adjust: 50px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 45px;
+  }
+  
+  #loginn {
+    text-align: right;
+    margin-right: 1%;
+    text-decoration-color: antiquewhite;
+  }
+  
+  #logoutt {
+    text-align: right;
+    margin-top: 1%;
+  }
+  
+  #title {
+    text-align: center;
+    margin-top: 1%;
+    margin-left: 0%;
+    color: rgb(240, 234, 231);
+  
+    font-family: "Courier New", Courier, monospace;
+  }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import CompanyModel from "../../../../Model/CompanyModel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import globals from "../../../../Utils/globals";
 import {
   Paper,
@@ -22,11 +22,27 @@ function AllCompanies() {
   const [companies, setCompanies] = useState<CompanyModel[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [companyId, setId] = useState<number>(0);
+  useEffect(() => {
+    handleAllCompanies();
+  }, [companies]);
   const ShowDeleteButton = () => (
-    <>
+    <><br/>
       <Container>
-        <Box>
-          <Typography>Please insert id of company to delete</Typography>
+        <Box sx={{
+            border: 2,
+            borderColor: "red",
+            borderRadius: 2,
+            gap: 2,
+            bgcolor: "white",
+            boxShadow: 8,
+            width: 400,
+            height: 170,
+            align: "center",
+            margin: "auto",
+            color: "black"
+          }}>
+          <Typography>want to delete some company? insert the ID</Typography>
+          <br/>
           <TextField
             required
             className="inputRounded"
@@ -38,7 +54,7 @@ function AllCompanies() {
               setId(Number(e.target.value));
             }}
           />
-          <br />
+          <br /><br/>
           <Button
             variant="contained"
             value="Search"
@@ -125,13 +141,6 @@ function AllCompanies() {
   };
   return (
     <>
-      <Button variant="contained" value="Search" onClick={handleAllCompanies}>
-        {" "}
-        Show me all companies{" "}
-      </Button>{" "}
-      <br />
-      <br /> //TODO: when delete a company getting an error in list of coupons
-      and then server error 500
       <div> {showResults && <Results />} </div>
       <div> {showResults && <ShowDeleteButton />}</div>
     </>

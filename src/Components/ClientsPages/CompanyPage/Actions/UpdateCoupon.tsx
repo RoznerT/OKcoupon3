@@ -56,13 +56,13 @@ function UpdateCoupon() {
       <Box
         sx={{
           border: 2,
-          borderColor: "blue",
+          borderColor: "black",
           borderRadius: 2,
           gap: 2,
           bgcolor: "whitesmoke",
           boxShadow: 8,
-          width: 500,
-          height: 820,
+          width: 800,
+          height: 830,
           align: "center",
           margin: "auto",
         }}
@@ -75,13 +75,13 @@ function UpdateCoupon() {
           <DriveFileRenameOutlineIcon></DriveFileRenameOutlineIcon>
           <TextField
             {...register("id", {
-              required: "this is required",
-              minLength: { value: 4, message: "Min length is 4" },
+              required: "this is required"
             })}
-            label="coupon ID - REQUIRED!!!"
+            label="coupon ID"
             variant="standard"
             placeholder="insert the coupon id"
           />
+          {errors.id && <span>{errors.id.message}</span>}
           <br />
           <BusinessIcon></BusinessIcon>
           <TextField
@@ -90,6 +90,7 @@ function UpdateCoupon() {
             variant="standard"
             placeholder="your company name"
           />
+          {errors.companyName && <span>{errors.companyName.message}</span>}
           <br />
           <br />
           <FormControl>
@@ -136,19 +137,24 @@ function UpdateCoupon() {
           <TextField
             {...register("title", {
               required: "this is required",
+              minLength: { value: 4, message: "Min length is 4" }
             })}
             label="want to change title?"
             variant="standard"
             placeholder="title of coupon"
           />
+          {errors.title && <span>{errors.title.message}</span>}
           <br />
           <SubtitlesIcon></SubtitlesIcon>
           <TextField
-            {...register("description", { required: "this is required" })}
+            {...register("description", { required: "this is required",
+            minLength: { value: 4, message: "Min length is 4" },
+           })}
             label="want to change description?"
             variant="standard"
             placeholder="more details about it"
           />
+          {errors.description && <span>{errors.description.message}</span>}
           <br />
           <CalendarMonthIcon></CalendarMonthIcon>
           <TextField
@@ -157,6 +163,7 @@ function UpdateCoupon() {
             variant="standard"
             placeholder="yyyy-mm-dd"
           />
+          {errors.startDate && <span>{errors.startDate.message}</span>}
           <br />
           <LockClockIcon></LockClockIcon>
           <TextField
@@ -165,6 +172,7 @@ function UpdateCoupon() {
             variant="standard"
             placeholder="yyyy-mm-dd"
           />
+          {errors.endDate && <span>{errors.endDate.message}</span>}
           <br />
           <InventoryIcon></InventoryIcon>
           <TextField
@@ -173,6 +181,7 @@ function UpdateCoupon() {
             variant="standard"
             placeholder="insert the max amount"
           />
+          {errors.amount && <span>{errors.amount.message}</span>}
           <br />
           <MonetizationOnIcon></MonetizationOnIcon>
           <TextField
@@ -181,6 +190,7 @@ function UpdateCoupon() {
             variant="standard"
             placeholder="00.00 format"
           />
+          {errors.price && <span>{errors.price.message}</span>}
           <br />
           <PhotoSizeSelectActualIcon></PhotoSizeSelectActualIcon>
           <TextField
@@ -189,6 +199,7 @@ function UpdateCoupon() {
             variant="standard"
             placeholder="insert link to the image"
           />
+          {errors.image && <span>{errors.image.message}</span>}
           <br />
           <br />
           <Button

@@ -8,6 +8,17 @@ function AdminMenu({ match }: RouteComponentProps) {
     <>
       <br />
       <Button
+        variant="contained"
+        size="medium"
+        onClick={() => {
+          history.push(`${match.url}/home`);
+          window.location.reload();
+        }}
+      >
+        Home
+      </Button>{" "}
+      &nbsp;
+      <Button
         variant="outlined"
         size="small"
         onClick={() => {

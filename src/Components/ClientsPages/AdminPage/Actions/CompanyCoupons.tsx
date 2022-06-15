@@ -50,10 +50,23 @@ function CompanyCoupons() {
     <>
       <div>
         <Container>
-          <Box>
+          <Box sx={{
+            border: 2,
+            borderColor: "black",
+            borderRadius: 2,
+            gap: 2,
+            bgcolor: "white",
+            boxShadow: 8,
+            width: 800,
+            height: 170,
+            align: "center",
+            margin: "auto",
+            color: "black"
+          }}>
             <Typography>
-              Please insert id of company to watch it coupons
+              <b>Please insert id of company to watch it coupons</b>
             </Typography>
+            <br/>
             <TextField
               required
               className="inputRounded"

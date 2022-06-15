@@ -13,7 +13,7 @@ import {
   Box,
 } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomerModel from "../../../../Model/CustomerModel";
 import globals from "../../../../Utils/globals";
 
@@ -21,11 +21,27 @@ function AllCustomers() {
   const [customers, setCustomers] = useState<CustomerModel[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [customerId, setId] = useState<number>(0);
+  useEffect(() => {
+    handleAllCustomers();
+  }, [customers]);
   const ShowDeleteButton = () => (
-    <>
+    <><br/>
       <Container>
-        <Box>
-          <Typography>Please insert id of customer to delete</Typography>
+        <Box sx={{
+            border: 2,
+            borderColor: "red",
+            borderRadius: 2,
+            gap: 2,
+            bgcolor: "white",
+            boxShadow: 8,
+            width: 400,
+            height: 170,
+            align: "center",
+            margin: "auto",
+            color: "black"
+          }}>
+          <Typography>want to delete some customer? insert the ID</Typography>
+          <br/>
           <TextField
             required
             className="inputRounded"
@@ -37,7 +53,7 @@ function AllCustomers() {
               setId(Number(e.target.value));
             }}
           />
-          <br />
+          <br /><br/>
           <Button
             variant="contained"
             value="Search"
@@ -131,12 +147,6 @@ function AllCustomers() {
   };
   return (
     <>
-      <Button variant="contained" value="Search" onClick={handleAllCustomers}>
-        {" "}
-        Show me all customers{" "}
-      </Button>{" "}
-      <br />
-      <br />
       <div> {showResults && <Results />} </div>
       <div> {showResults && <ShowDeleteButton />} </div>
     </>

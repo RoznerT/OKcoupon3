@@ -9,13 +9,16 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomerModel from "../../../../Model/CustomerModel";
 import globals from "../../../../Utils/globals";
 function CustomerDetails() {
   const [customerId, setId] = useState<number>(0);
   const [customer, setCustomer] = useState<CustomerModel>();
   const [showResults, setShowResults] = useState(false);
+  useEffect(() => {
+    handleOneCustomer();
+  }, [customer]);
   const Results = () => (
     <div id="results" className="search-results">
       <hr />
@@ -75,12 +78,6 @@ function CustomerDetails() {
   };
   return (
     <>
-      <div>
-        <Button variant="contained" value="Search" onClick={handleOneCustomer}>
-          {" "}
-          Show Me Details{" "}
-        </Button>
-      </div>
       {showResults && <Results />}
     </>
   );

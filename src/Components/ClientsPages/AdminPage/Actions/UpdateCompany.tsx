@@ -40,12 +40,12 @@ function UpdateCompany() {
       <Box
         sx={{
           border: 2,
-          borderColor: "blue",
+          borderColor: "black",
           borderRadius: 2,
           gap: 2,
           bgcolor: "whitesmoke",
           boxShadow: 8,
-          width: 500,
+          width: 800,
           height: 250,
           align: "center",
           margin: "auto",
@@ -55,6 +55,7 @@ function UpdateCompany() {
           <Typography sx={{ fontWeight: "bold", color: "black" }}>
             Update Company Form
           </Typography>
+          <br/>
           <DriveFileRenameOutlineIcon
             style={{ color: "grey" }}
           ></DriveFileRenameOutlineIcon>
@@ -62,18 +63,22 @@ function UpdateCompany() {
             {...register("id", {
               required: "this is required",
             })}
-            label="company ID - REQUIRED!!!"
+            label="company ID "
             variant="standard"
             placeholder="insert the company id"
           />
+          {errors.id && <span>{errors.id.message}</span>}
           <br />
           <AccountCircleIcon style={{ color: "grey" }}></AccountCircleIcon>
           <TextField
-            {...register("email", { required: "this is required" })}
+            {...register("email", { required: "this is required",
+            minLength: { value: 4, message: "Min length is 4" } 
+          })}
             label="want to change the mail?"
             variant="standard"
             placeholder="insert your new email"
           />
+          {errors.email && <span>{errors.email.message}</span>}
           <br />
           <KeyIcon style={{ color: "grey" }}></KeyIcon>
           <TextField
@@ -84,11 +89,12 @@ function UpdateCompany() {
             variant="standard"
             placeholder="insert your new password"
           />
+          {errors.password && <span>{errors.password.message}</span>}
           <br />
           <br />
           <Button
-            sx={{ color: "royalblue", border: 1, bgcolor: "grey" }}
             type="submit"
+            variant="contained"
           >
             Submit
           </Button>

@@ -1,4 +1,5 @@
 import { Switch, Route } from "react-router-dom";
+import HomePage from "../GuestPage/HomePage/HomePage";
 import AddCoupon from "./Actions/AddCoupon";
 import AllCompanyCoupons from "./Actions/AllCompanyCoupons";
 import CompanyDetails from "./Actions/CompanyDetails";
@@ -9,6 +10,11 @@ function CompanyPage({ match }: any) {
     <>
       <h1>Hello Company, please choose from the options above</h1>
       <Switch>
+      <Route
+          path={`${match.path}/home`}
+          exact
+          component={HomePage}
+        />
         <Route
           path={`${match.path}/allCoupons`}
           exact

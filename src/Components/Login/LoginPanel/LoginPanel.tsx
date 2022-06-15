@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import globals from "../../../Utils/globals";
+import HomeIcon from '@mui/icons-material/Home';
 
 export class AuthState {
   public userName: string = "";
@@ -48,9 +49,9 @@ function LoginPanel(props: LoginProps) {
             history.push("/customer");
             window.location.reload();
           })
-          .catch((response) => {
-            console.error(response.data);
-            console.error(response.status);
+          .catch((error) => {
+            console.error(error.data);
+            console.error(error.status);
           });
         break;
 
@@ -92,10 +93,9 @@ function LoginPanel(props: LoginProps) {
             window.location.reload();
           })
           .catch((error) => {
-            console.log(error.response.data);
+            console.log(error.response.status);
             console.log(error.response.data.description);
             console.error(error.response.status);
-            //notify.error(error.response.data.description);
           });
         break;
 
@@ -127,9 +127,14 @@ function LoginPanel(props: LoginProps) {
             variant="standard"
           />
           {errors.userPass && <p>{errors.userPass.message}</p>}
-          <br />
-          <Button type="submit">Login</Button>
+          <br /> <br/>
+          <Button variant="contained" type="submit">Login</Button>
         </form>
+        <br/>
+          or back to home page
+           <HomeIcon onClick={() => {
+          history.push(`home`);
+        }}></HomeIcon>
       </Box>
     </Container>
   );

@@ -1,10 +1,11 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import "./Menu.css";
 import CustomerMenu from "./CustomerMenu";
 import AdminMenu from "./AdminMenu";
 import CompanyMenu from "./CompanyMenu";
 import { useEffect, useState } from "react";
-
+import { Button, Grid } from "@mui/material";
+import HomeIcon from '@mui/icons-material/Home';
 function Menu() {
   const [role, setRole] = useState("guest");
   const checkRole = () => {
@@ -38,7 +39,10 @@ function Menu() {
               </Switch>
             );
           default:
-            return <h3>HELLO GUEST, PLEASE REGISTER OR SIGN IN</h3>;
+            return (
+            <div>
+              <h3>HELLO GUEST! please register or sign in</h3>
+            </div>);
         }
       })()}
     </div>

@@ -1,5 +1,6 @@
 import { Button } from "@material-ui/core";
 import { Component } from "react";
+import { useHistory } from "react-router-dom";
 import "./Header.css";
 class Header extends Component {
   public render(): JSX.Element {
@@ -7,10 +8,13 @@ class Header extends Component {
       <div className="Header">
         OKcoupon
         <div id="loginn">
+          <Button variant="contained" href="/register">
+            Register
+          </Button>
+          &nbsp;
           <Button variant="contained" color="primary" href="/login">
-            {" "}
-            LOGIN{" "}
-          </Button>{" "}
+            LOGIN
+          </Button>
           &nbsp;
           <Button
             variant="contained"
@@ -18,13 +22,7 @@ class Header extends Component {
             href="/logout"
             onClick={handleClick}
           >
-            {" "}
-            LOGOUT{" "}
-          </Button>{" "}
-          &nbsp;
-          <Button variant="contained" href="/home">
-            {" "}
-            Home
+            LOGOUT
           </Button>
           <br />
         </div>

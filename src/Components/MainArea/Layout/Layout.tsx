@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import Routing from "../../Routing/Routing";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
+import HeaderS from "../HeaderS/HeaderS";
 import Menu from "../Menu/Menu";
 import "./Layout.css";
 

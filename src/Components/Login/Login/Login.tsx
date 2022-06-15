@@ -10,9 +10,20 @@ function Login(): JSX.Element {
   };
   return (
     <Container sx={{ marginTop: 5 }}>
-      <Card>
         {
-          <Box sx={{ borderBottom: 1, borderStyle: "solid", padding: 2 }}>
+          <Box sx={{
+            border: 2,
+            borderColor: "black",
+            borderRadius: 2,
+            gap: 2,
+            bgcolor: "whitesmoke",
+            boxShadow: 8,
+            width: 1100,
+            height: 320,
+            align: "center",
+            margin: "auto",
+            color: "black"
+          }}>
             <Tabs onChange={handleChange} value={value} centered>
               <Tab label="Customer Login" value="CUSTOMER" />
               <Tab label="Company Login" value="COMPANY" />
@@ -23,7 +34,7 @@ function Login(): JSX.Element {
             <LoginPanel clientType={value} />
           </Box>
         }
-      </Card>
+      
     </Container>
   );
 }

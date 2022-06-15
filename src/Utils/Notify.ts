@@ -11,7 +11,6 @@ class Notify {
   }
 
   public error(message: string) {
-    console.log("error notify");
     this.notification.error(message);
   }
 }

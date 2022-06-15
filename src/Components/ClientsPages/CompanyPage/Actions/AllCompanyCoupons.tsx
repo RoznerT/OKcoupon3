@@ -41,9 +41,21 @@ function AllCompanyCoupons() {
   }, [filteredByPrice, category]);
   const ShowDeleteButton = () => (
     <>
-      <Container>
-        <Box>
-          <Typography>Please Insert ID Of Coupon To Delete</Typography>
+      <Container >
+        <Box sx={{
+            border: 2,
+            borderColor: "red",
+            borderRadius: 2,
+            gap: 2,
+            bgcolor: "white",
+            boxShadow: 8,
+            width: 400,
+            height: 170,
+            align: "center",
+            margin: "auto",
+            color: "black"
+          }}>
+          <Typography>want to delete some coupon? insert the ID</Typography>
           <br />
           <TextField
             required
@@ -59,6 +71,7 @@ function AllCompanyCoupons() {
           <br />
           <br />
           <Button
+            color = "error"
             variant="contained"
             value="Search"
             onClick={handleDeleteCoupon}

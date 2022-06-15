@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CompanyModel from "../../../../Model/CompanyModel";
 import globals from "../../../../Utils/globals";
 
@@ -17,7 +17,10 @@ function CompanyDetails() {
   const [companyId, setId] = useState<number>(0);
   const [company, setCompany] = useState<CompanyModel>();
   const [showResults, setShowResults] = useState(false);
-  const Results = () => (
+  useEffect(() => {
+    handleOneCompany();
+  }, [company]);
+    const Results = () => (
     <div id="results" className="search-results">
       <hr />
       <TableContainer component={Paper}>
@@ -72,12 +75,6 @@ function CompanyDetails() {
   };
   return (
     <>
-      <div>
-        <Button variant="contained" value="Search" onClick={handleOneCompany}>
-          {" "}
-          Show Me Details{" "}
-        </Button>
-      </div>
       {showResults && <Results />}
     </>
   );

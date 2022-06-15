@@ -58,12 +58,12 @@ function UpdateCustomer() {
       <Box
         sx={{
           border: 2,
-          borderColor: "blue",
+          borderColor: "black",
           borderRadius: 2,
           gap: 2,
           bgcolor: "whitesmoke",
           boxShadow: 8,
-          width: 500,
+          width: 800,
           height: 330,
           align: "center",
           margin: "auto",
@@ -80,42 +80,56 @@ function UpdateCustomer() {
             {...register("id", {
               required: "this is required",
             })}
-            label="customer ID - REQUIRED!!!"
+            label="customer ID"
             variant="standard"
             placeholder="insert the customer id"
           />
+          {errors.id && <span>{errors.id.message}</span>}
           <br />
           <PersonIcon style={{ color: "grey" }}></PersonIcon>
           <TextField
-            {...register("firstName")}
+            {...register("firstName", {
+              required: "this is required"
+            })}
             label="want to change first-name?"
             variant="standard"
             placeholder="insert your new first-name"
           />
+          {errors.firstName && <span>{errors.firstName.message}</span>}
           <br />
           <PersonIcon style={{ color: "grey" }}></PersonIcon>
           <TextField
-            {...register("lastName")}
+            {...register("lastName", {
+            required: "this is required"})}
             label="want to change last-name?"
             variant="standard"
             placeholder="insert your new last-name"
           />
+          {errors.lastName && <span>{errors.lastName.message}</span>}
           <br />
           <AccountCircleIcon style={{ color: "grey" }}></AccountCircleIcon>
           <TextField
-            {...register("email")}
+            {...register("email" ,{
+              required: "this is required",
+              minLength: { value: 4, message: "Min length is 4" }
+            })}
             label="want to change the mail?"
             variant="standard"
             placeholder="insert your new email"
           />
+          {errors.email && <span>{errors.email.message}</span>}
           <br />
           <KeyIcon style={{ color: "grey" }}></KeyIcon>
           <TextField
-            {...register("password")}
+            {...register("password", {
+              required: "this is required",
+              minLength: { value: 4, message: "Min length is 4" }
+            })}
             label="want to change the pass?"
             variant="standard"
             placeholder="insert your new password"
           />
+            {errors.password && <span>{errors.password.message}</span>}
           <br />
           <br />
           <Button
