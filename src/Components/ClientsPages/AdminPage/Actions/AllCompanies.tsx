@@ -17,56 +17,18 @@ import {
   TextField,
 } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
+import MsgModel from "../../../../Model/MsgModel";
+import Message from "../../../Message/Message";
 
 function AllCompanies() {
   const [companies, setCompanies] = useState<CompanyModel[]>([]);
   const [showResults, setShowResults] = useState(false);
-  const [companyId, setId] = useState<number>(0);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>(); 
+
   useEffect(() => {
     handleAllCompanies();
   }, [companies]);
-  const ShowDeleteButton = () => (
-    <><br/>
-      <Container>
-        <Box sx={{
-            border: 2,
-            borderColor: "red",
-            borderRadius: 2,
-            gap: 2,
-            bgcolor: "white",
-            boxShadow: 8,
-            width: 400,
-            height: 170,
-            align: "center",
-            margin: "auto",
-            color: "black"
-          }}>
-          <Typography>want to delete some company? insert the ID</Typography>
-          <br/>
-          <TextField
-            required
-            className="inputRounded"
-            type="number"
-            id="id"
-            label="id"
-            value={companyId}
-            onChange={(e) => {
-              setId(Number(e.target.value));
-            }}
-          />
-          <br /><br/>
-          <Button
-            variant="contained"
-            value="Search"
-            onClick={handleDeleteCompany}
-          >
-            {" "}
-            Submit{" "}
-          </Button>
-        </Box>
-      </Container>
-    </>
-  );
   const Results = () => (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -97,26 +59,10 @@ function AllCompanies() {
         </TableBody>
       </Table>
     </TableContainer>
+
   );
 
-  const handleDeleteCompany = () => {
-    axios
-      .delete<void>(globals.urls.deleteCompany + `${companyId}`, {
-        headers: {
-          authorization: `${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        localStorage.setItem("token", res.headers[`authorization`]);
-        alert("company deleted successfully");
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
-        //notify.error(response.data.description);
-      });
-  };
+
 
   const handleAllCompanies = () => {
     axios
@@ -132,18 +78,23 @@ function AllCompanies() {
         setShowResults(true);
       })
       .catch((error) => {
-        console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
+        console.log(error.response.data.error);
         setShowResults(false);
-        //notify.error(response.data.description);
+        const Error: MsgModel = {
+          status: error.response.status,
+          error: error.response.data.error,
+          description: error.response.data.description
+        }
+        setError(Error);
+        setIsError(true);
+        setShowResults(false);
       });
   };
   return (
     <>
       <div> {showResults && <Results />} </div>
-      <div> {showResults && <ShowDeleteButton />}</div>
-    </>
+      <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
+      </>
   );
 }
 

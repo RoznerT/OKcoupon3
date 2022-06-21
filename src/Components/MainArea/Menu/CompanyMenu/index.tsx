@@ -7,55 +7,47 @@ function CompanyMenu({ match }: RouteComponentProps) {
   return (
     <>
     <br />
-      <Button
-        variant="contained"
-        size="medium"
-        onClick={() => {
+      <Button  variant="contained" size="medium" onClick={() => {
           history.push(`${match.url}/home`);
           window.location.reload();
         }}
       >
         Home
-      </Button>{" "}
+      </Button>
       &nbsp;
-      <Button
-        variant="outlined"
-        size="small"
-        onClick={() => {
+      <Button variant="outlined" size="small" onClick={() => {
           history.push(`${match.url}/allCoupons`);
         }}
       >
         Watch Your Coupons
       </Button>
       &nbsp;
-      <Button
-        variant="outlined"
-        size="small"
-        onClick={() => {
+      <Button variant="outlined" size="small" onClick={() => {
           history.push(`${match.url}/newCoupon`);
         }}
       >
         Add Coupon
       </Button>
       &nbsp;
-      <Button
-        variant="outlined"
-        size="small"
-        onClick={() => {
+      <Button variant="outlined" size="small" onClick={() => {
           history.push(`${match.url}/updateCoupon`);
         }}
       >
         Update Coupon
       </Button>
       &nbsp;
-      <Button
-        variant="outlined"
-        size="small"
-        onClick={() => {
+      <Button variant="outlined" size="small" onClick={() => {
           history.push(`${match.url}/companyDetails`);
         }}
       >
         Company Details
+      </Button>
+      &nbsp;
+      <Button variant="outlined" size="small" onClick={() => {
+          history.push(`${match.url}/deleteCoupon`);
+        }}
+      >
+        Delete Coupon
       </Button>
     </>
   );

@@ -3,7 +3,7 @@
   box-sizing: border-box; /* fix css size bug/feature */
   display: grid;
   grid-template-columns: 50px 50px 50px 50px;
-  grid-template-rows: 120px 60px 2000px 50px;
+  grid-template-rows: 120px 100px 2000px 50px;
   /*grid-template-rows: 7% 95% 3%;*/
   /*grid-template-columns: repeat(6, 1fr); /* fr = fraction */
 }

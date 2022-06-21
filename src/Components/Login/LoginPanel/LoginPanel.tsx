@@ -11,6 +11,9 @@ import {
 import { useHistory } from "react-router-dom";
 import globals from "../../../Utils/globals";
 import HomeIcon from '@mui/icons-material/Home';
+import { useState } from "react";
+import MsgModel from "../../../Model/MsgModel";
+import Message from "../../Message/Message";
 
 export class AuthState {
   public userName: string = "";
@@ -22,13 +25,15 @@ interface LoginProps {
   clientType: string;
 }
 
-function LoginPanel(props: LoginProps) {
-  const {
+function LoginPanel(props: LoginProps) {  
+    const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   const history = useHistory();
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>();  
 
   const onSubmit = (data: any) => {
     const newData = { ...data, clientType: props.clientType };
@@ -50,8 +55,14 @@ function LoginPanel(props: LoginProps) {
             window.location.reload();
           })
           .catch((error) => {
-            console.error(error.data);
-            console.error(error.status);
+            console.log(error.response.data);
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
           });
         break;
 
@@ -71,9 +82,16 @@ function LoginPanel(props: LoginProps) {
             history.push("/company");
             window.location.reload();
           })
-          .catch((response) => {
-            console.error(response.data);
-            console.error(response.status);
+          .catch((error) => {
+            console.log(error.response.data);
+            console.log();
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
           });
         break;
 
@@ -93,9 +111,15 @@ function LoginPanel(props: LoginProps) {
             window.location.reload();
           })
           .catch((error) => {
-            console.log(error.response.status);
-            console.log(error.response.data.description);
-            console.error(error.response.status);
+            console.log(error.response.data);
+            console.log();
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
           });
         break;
 
@@ -103,7 +127,7 @@ function LoginPanel(props: LoginProps) {
     }
   };
 
-  return (
+  return (<>
     <Container>
       <Box>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -137,6 +161,9 @@ function LoginPanel(props: LoginProps) {
         }}></HomeIcon>
       </Box>
     </Container>
+
+<Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
+</>
   );
 }
 

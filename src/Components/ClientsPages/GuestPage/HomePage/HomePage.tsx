@@ -46,7 +46,7 @@ function HomePage(): JSX.Element {
 
   useEffect(() => {
     getDefaultHomePage();
-  }, [filteredByPrice, category]); //Todo: render everytime we have change in couponList
+  }, [filteredByPrice, category]); 
 
   return (
     <div className="HomePage">

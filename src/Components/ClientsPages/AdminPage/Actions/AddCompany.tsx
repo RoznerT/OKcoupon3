@@ -5,8 +5,15 @@ import globals from "../../../../Utils/globals";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import KeyIcon from "@mui/icons-material/Key";
-import notify from "../../../../Utils/Notify";
+import { useState } from "react";
+import MsgModel from "../../../../Model/MsgModel";
+import Message from "../../../Message/Message";
+import Success from "../../../Message/Success";
 function AddCompany() {
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>();  
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [success,setsuccess] = useState<MsgModel>(); 
   const {
     register,
     formState: { errors },
@@ -22,21 +29,28 @@ function AddCompany() {
         },
       })
       .then((res) => {
-        localStorage.setItem(
-          "token",
-          res.headers[`authorization`].substring(8, 219)
-        );
-        alert("company added successfully");
+        localStorage.setItem("token",res.headers[`authorization`]);
+        const Success: MsgModel = {
+          status: res.status,
+          error: "Success!",
+          description: "Company added"
+        }
+        setsuccess(Success);
+        setIsSuccess(true);
       })
       .catch((error) => {
         console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
-        //notify.error(error.response.data);
+        const Error: MsgModel = {
+          status: error.response.status,
+          error: error.response.data.error,
+          description: error.response.data.description
+        }
+        setError(Error);
+        setIsError(true);
       });
   };
 
-  return (
+  return (<>
     <Container>
       <Box
         sx={{
@@ -101,6 +115,9 @@ function AddCompany() {
         </form>
       </Box>
     </Container>
+    <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
+    <Success isSuccess={isSuccess} success={success} onClickHandle={()=>setIsSuccess(false)}/>
+        </>
   );
 }
 

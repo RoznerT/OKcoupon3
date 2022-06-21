@@ -5,8 +5,16 @@ import globals from "../../../../Utils/globals";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyIcon from "@mui/icons-material/Key";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import MsgModel from "../../../../Model/MsgModel";
+import { useState } from "react";
+import Message from "../../../Message/Message";
+import Success from "../../../Message/Success";
 
 function UpdateCompany() {
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>();
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [success,setsuccess] = useState<MsgModel>();   
   const {
     register,
     formState: { errors },
@@ -25,17 +33,27 @@ function UpdateCompany() {
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("token", res.headers[`authorization`]);
-        alert("customer updated successfully");
+        const Success: MsgModel = {
+          status: res.status,
+          error: "Success!",
+          description: "Company updated"
+        }
+        setsuccess(Success);
+        setIsSuccess(true);
       })
       .catch((error) => {
         console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
-        //notify.error(response.data.description);
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
       });
   };
 
-  return (
+  return (<>
     <Container>
       <Box
         sx={{
@@ -101,6 +119,9 @@ function UpdateCompany() {
         </form>
       </Box>
     </Container>
+    <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
+    <Success isSuccess={isSuccess} success={success} onClickHandle={()=>setIsSuccess(false)}/>
+</>    
   );
 }
 

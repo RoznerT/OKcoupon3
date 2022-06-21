@@ -11,11 +11,15 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import CustomerModel from "../../../../Model/CustomerModel";
+import MsgModel from "../../../../Model/MsgModel";
 import globals from "../../../../Utils/globals";
+import Message from "../../../Message/Message";
 function CustomerDetails() {
   const [customerId, setId] = useState<number>(0);
   const [customer, setCustomer] = useState<CustomerModel>();
   const [showResults, setShowResults] = useState(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>();  
   useEffect(() => {
     handleOneCustomer();
   }, [customer]);
@@ -70,15 +74,20 @@ function CustomerDetails() {
       })
       .catch((error) => {
         console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
+        const Error: MsgModel = {
+          status: error.response.status,
+          error: error.response.data.error,
+          description: error.response.data.description
+        }
+        setError(Error);
+        setIsError(true);
         setShowResults(false);
-        //notify.error(response.data.description);
       });
   };
   return (
     <>
       {showResults && <Results />}
+      <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
     </>
   );
 }

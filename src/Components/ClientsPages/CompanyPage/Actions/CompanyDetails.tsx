@@ -11,9 +11,13 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import CompanyModel from "../../../../Model/CompanyModel";
+import MsgModel from "../../../../Model/MsgModel";
 import globals from "../../../../Utils/globals";
+import Message from "../../../Message/Message";
 
 function CompanyDetails() {
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>();  
   const [companyId, setId] = useState<number>(0);
   const [company, setCompany] = useState<CompanyModel>();
   const [showResults, setShowResults] = useState(false);
@@ -67,15 +71,20 @@ function CompanyDetails() {
       })
       .catch((error) => {
         console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
         setShowResults(false);
-        //notify.error(response.data.description);
       });
   };
   return (
     <>
       {showResults && <Results />}
+      <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
     </>
   );
 }

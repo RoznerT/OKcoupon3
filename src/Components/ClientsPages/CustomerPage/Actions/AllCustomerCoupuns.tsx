@@ -10,8 +10,10 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { CouponModel } from "../../../../Model/CouponModel";
+import MsgModel from "../../../../Model/MsgModel";
 import globals from "../../../../Utils/globals";
 import CouponCard from "../../../CouponCard/CouponCard";
+import Message from "../../../Message/Message";
 
 function AllCustomerCoupons() {
   const [allCoupons, setAllCoupons] = useState<Boolean>(true);
@@ -19,6 +21,8 @@ function AllCustomerCoupons() {
   const [filteredByPrice, setFilteredByPrice] = useState<CouponModel[]>([]);
   const [coupons, setCoupons] = useState<CouponModel[]>([]);
   const [couponId, setId] = useState<number>(0);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>();  
   const filterByPrice = (value: number | number[]) => {
     let c = coupons.filter((x) => x.price < value);
     setFilteredByPrice(c);
@@ -55,9 +59,13 @@ function AllCustomerCoupons() {
       })
       .catch((error) => {
         console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
-        //notify.error(response.data.description);
+        const Error: MsgModel = {
+          status: error.response.status,
+          error: error.response.data.error,
+          description: error.response.data.description
+        }
+        setError(Error);
+        setIsError(true);
       });
   };
   return (
@@ -109,6 +117,7 @@ function AllCustomerCoupons() {
         {allCoupons &&
           data.map((item, index) => <CouponCard key={index} coupon={item} />)}
       </div>
+      <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
     </>
   );
 }

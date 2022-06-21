@@ -7,8 +7,16 @@ import axios from "axios";
 import globals from "../../../../Utils/globals";
 import HomeIcon from '@mui/icons-material/Home';
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
+import MsgModel from "../../../../Model/MsgModel";
+import Message from "../../../Message/Message";
+import Success from "../../../Message/Success";
 
 function Register() {
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>(); 
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [success,setsuccess] = useState<MsgModel>(); 
   const history = useHistory();
   const {
     register,
@@ -18,11 +26,25 @@ function Register() {
 
   const onSubmit = (data: any) => {
     console.log(data)
-    axios.post(globals.urls.register, data).catch((error) => {
+    axios.post(globals.urls.register, data)
+    .then((res) => {
+      const Success: MsgModel = {
+        status: res.status,
+        error: "Success!",
+        description: "Registartion complete. You can login now..."
+      }
+      setsuccess(Success);
+      setIsSuccess(true);
+    })
+    .catch((error) => {
       console.log(error.response.data);
-      console.error(error.response.description);
-      console.error(error.response.status);
-      //notify.error(response.data.description);
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
     });
   };
   return (
@@ -99,7 +121,10 @@ function Register() {
         }}></HomeIcon>
         </form>
       </Box>
-    </Container></>
+    </Container>
+    <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
+    <Success isSuccess={isSuccess} success={success} onClickHandle={()=>setIsSuccess(false)}/>
+    </>
   );
 }
 

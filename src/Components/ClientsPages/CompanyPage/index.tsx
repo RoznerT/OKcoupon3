@@ -3,6 +3,7 @@ import HomePage from "../GuestPage/HomePage/HomePage";
 import AddCoupon from "./Actions/AddCoupon";
 import AllCompanyCoupons from "./Actions/AllCompanyCoupons";
 import CompanyDetails from "./Actions/CompanyDetails";
+import DeleteCoupon from "./Actions/DeleteCoupon";
 import UpdateCoupon from "./Actions/UpdateCoupon";
 
 function CompanyPage({ match }: any) {
@@ -30,6 +31,11 @@ function CompanyPage({ match }: any) {
           path={`${match.path}/companyDetails`}
           exact
           component={CompanyDetails}
+        />
+        <Route
+          path={`${match.path}/deleteCoupon`}
+          exact
+          component={DeleteCoupon}
         />
       </Switch>
     </>

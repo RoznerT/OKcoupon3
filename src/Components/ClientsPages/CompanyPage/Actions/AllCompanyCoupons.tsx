@@ -14,15 +14,18 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { CouponModel } from "../../../../Model/CouponModel";
+import MsgModel from "../../../../Model/MsgModel";
 import globals from "../../../../Utils/globals";
 import CouponCard from "../../../CouponCard/CouponCard";
+import Message from "../../../Message/Message";
 
 function AllCompanyCoupons() {
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>();  
   const [allCoupons, setAllCoupons] = useState<Boolean>(true);
   const [category, setCategory] = useState("All");
   const [filteredByPrice, setFilteredByPrice] = useState<CouponModel[]>([]);
   const [coupons, setCoupons] = useState<CouponModel[]>([]);
-  const [couponId, setId] = useState<number>(0);
   const [showResults, setShowResults] = useState(false);
   const filterByPrice = (value: number | number[]) => {
     let c = coupons.filter((x) => x.price < value);
@@ -39,51 +42,6 @@ function AllCompanyCoupons() {
   useEffect(() => {
     handleAllCoupons();
   }, [filteredByPrice, category]);
-  const ShowDeleteButton = () => (
-    <>
-      <Container >
-        <Box sx={{
-            border: 2,
-            borderColor: "red",
-            borderRadius: 2,
-            gap: 2,
-            bgcolor: "white",
-            boxShadow: 8,
-            width: 400,
-            height: 170,
-            align: "center",
-            margin: "auto",
-            color: "black"
-          }}>
-          <Typography>want to delete some coupon? insert the ID</Typography>
-          <br />
-          <TextField
-            required
-            className="inputRounded"
-            type="number"
-            id="id"
-            label="id"
-            value={couponId}
-            onChange={(e) => {
-              setId(Number(e.target.value));
-            }}
-          />
-          <br />
-          <br />
-          <Button
-            color = "error"
-            variant="contained"
-            value="Search"
-            onClick={handleDeleteCoupon}
-          >
-            {" "}
-            Submit{" "}
-          </Button>
-        </Box>
-      </Container>
-    </>
-  );
-
   const Results = () => (
     <div>
       {coupons.map((item, index) => (
@@ -92,24 +50,6 @@ function AllCompanyCoupons() {
     </div>
   );
 
-  const handleDeleteCoupon = () => {
-    axios
-      .delete<void>(globals.urls.deleteCoupon + `${couponId}`, {
-        headers: {
-          authorization: `${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        localStorage.setItem("token", res.headers[`authorization`]);
-        alert("coupon deleted successfully");
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
-        //notify.error(response.data.description);
-      });
-  };
   const handleAllCoupons = () => {
     axios
       .get<CouponModel[]>(globals.urls.allCompanyCoupons, {
@@ -125,10 +65,14 @@ function AllCompanyCoupons() {
       })
       .catch((error) => {
         console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
         setShowResults(false);
-        //notify.error(response.data.description);
       });
   };
   return (
@@ -180,10 +124,7 @@ function AllCompanyCoupons() {
         {allCoupons &&
           data.map((item, index) => <CouponCard key={index} coupon={item} />)}
       </div>
-      <div>
-        {" "}
-        <ShowDeleteButton />{" "}
-      </div>
+      <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
     </>
   );
 }

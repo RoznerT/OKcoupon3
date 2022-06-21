@@ -22,15 +22,22 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import globals from "../../../../Utils/globals";
+import MsgModel from "../../../../Model/MsgModel";
+import { useState } from "react";
+import Message from "../../../Message/Message";
+import Success from "../../../Message/Success";
 
 function UpdateCoupon() {
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>(); 
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [success,setsuccess] = useState<MsgModel>();  
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   const onSubmit = (data: any) => {
-    console.log("sending data");
     console.log(data);
     axios
       .put(globals.urls.updateCoupon, data, {
@@ -41,17 +48,27 @@ function UpdateCoupon() {
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("token", res.headers[`authorization`]);
-        alert("coupon updated successfully");
+        const Success: MsgModel = {
+          status: res.status,
+          error: "Success!",
+          description: "Coupon updated"
+        }
+        setsuccess(Success);
+        setIsSuccess(true);
       })
       .catch((error) => {
         console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
-        //notify.error(response.data.description);
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
       });
   };
 
-  return (
+  return (<>
     <Container>
       <Box
         sx={{
@@ -211,6 +228,9 @@ function UpdateCoupon() {
         </form>
       </Box>
     </Container>
+    <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
+    <Success isSuccess={isSuccess} success={success} onClickHandle={()=>setIsSuccess(false)}/>
+    </>
   );
 }
 

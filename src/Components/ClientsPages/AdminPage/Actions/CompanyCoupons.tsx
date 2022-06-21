@@ -9,13 +9,17 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import { CouponModel } from "../../../../Model/CouponModel";
+import MsgModel from "../../../../Model/MsgModel";
 import globals from "../../../../Utils/globals";
 import CouponCard from "../../../CouponCard/CouponCard";
+import Message from "../../../Message/Message";
 
 function CompanyCoupons() {
   const [companyId, setId] = useState<number>(0);
   const [coupons, setCoupons] = useState<CouponModel[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>();  
 
   const Results = () => (
     <div>
@@ -40,11 +44,15 @@ function CompanyCoupons() {
       })
       .catch((error) => {
         console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
-        setShowResults(false);
-        //notify.error(response.data.description);
-      });
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
+            setShowResults(false);
+          });
   };
   return (
     <>
@@ -93,6 +101,7 @@ function CompanyCoupons() {
         </Container>
       </div>
       <div>{showResults && <Results />}</div>
+      <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
     </>
   );
 }

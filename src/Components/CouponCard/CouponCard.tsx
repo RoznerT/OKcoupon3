@@ -1,8 +1,12 @@
 import { Box, Button } from "@mui/material";
 import { green } from "@mui/material/colors";
 import axios from "axios";
+import { useState } from "react";
 import { CouponModel } from "../../Model/CouponModel";
+import MsgModel from "../../Model/MsgModel";
 import globals from "../../Utils/globals";
+import Message from "../Message/Message";
+import Success from "../Message/Success";
 import "./CouponCard.css";
 
 interface CouponCardProps {
@@ -10,7 +14,11 @@ interface CouponCardProps {
 }
 
 function CouponCard(props: CouponCardProps) {
-  const handlePurchase = () => {
+    const [isError, setIsError] = useState<boolean>(false);
+    const [error,setError] = useState<MsgModel>(); 
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    const [success,setsuccess] = useState<MsgModel>(); 
+    const handlePurchase = () => {
     if (localStorage.getItem("clientType") != "CUSTOMER") {
       alert("please login as a customer or register");
     } else {
@@ -26,13 +34,23 @@ function CouponCard(props: CouponCardProps) {
         )
         .then((res) => {
           localStorage.setItem("token", res.headers[`authorization`]);
-          alert("coupon purchased successfully");
+          const Success: MsgModel = {
+            status: res.status,
+            error: "Success!",
+            description: "Coupon deleted"
+          }
+          setsuccess(Success);
+          setIsSuccess(true);
         })
         .catch((error) => {
           console.log(error.response.data);
-          console.error(error.response.data);
-          console.error(error.response.status);
-          alert(error.response.data.description);
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
         });
     }
   };
@@ -71,6 +89,8 @@ function CouponCard(props: CouponCardProps) {
           </Button>
         </Box>
       </div>
+      <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
+      <Success isSuccess={isSuccess} success={success} onClickHandle={()=>setIsSuccess(false)}/>
     </>
   );
 }

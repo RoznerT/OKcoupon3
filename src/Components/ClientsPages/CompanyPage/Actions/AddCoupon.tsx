@@ -21,8 +21,16 @@ import LockClockIcon from "@mui/icons-material/LockClock";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual";
+import { useState } from "react";
+import MsgModel from "../../../../Model/MsgModel";
+import Message from "../../../Message/Message";
+import Success from "../../../Message/Success";
 
 function AddCoupon() {
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>();  
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [success,setsuccess] = useState<MsgModel>(); 
   const {
     register,
     formState: { errors },
@@ -38,18 +46,28 @@ function AddCoupon() {
       })
       .then((res) => {
         localStorage.setItem("token", res.headers[`authorization`]);
-        alert("company added successfully");
+        const Success: MsgModel = {
+          status: res.status,
+          error: "Success!",
+          description: "Coupon added"
+        }
+        setsuccess(Success);
+        setIsSuccess(true);
       })
       .catch((error) => {
         console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
-        //notify.error("bad login");
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
       });
   };
 
   return (
-    <Container>
+    <><Container>
       <Box
         sx={{
           border: 2,
@@ -74,8 +92,7 @@ function AddCoupon() {
             {...register("companyName", { required: "this is required" })}
             label="company name"
             variant="standard"
-            placeholder="your company name"
-          />
+            placeholder="your company name" />
           {errors.companyName && <span>{errors.companyName.message}</span>}
           <br />
           <br />
@@ -88,33 +105,27 @@ function AddCoupon() {
               <FormControlLabel
                 value="FASHION"
                 control={<Radio />}
-                label="Fashion"
-              />
+                label="Fashion" />
               <FormControlLabel
                 value="ELECTRICITY"
                 control={<Radio />}
-                label="Electricity"
-              />
+                label="Electricity" />
               <FormControlLabel
                 value="RESTAURANT"
                 control={<Radio />}
-                label="Restaurant"
-              />
+                label="Restaurant" />
               <FormControlLabel
                 value="VACATION"
                 control={<Radio />}
-                label="Vacation"
-              />
+                label="Vacation" />
               <FormControlLabel
                 value="ENTERTAINMENT"
                 control={<Radio />}
-                label="Entertainment"
-              />
+                label="Entertainment" />
               <FormControlLabel
                 value="DOGFOOD"
                 control={<Radio />}
-                label="Dog-Food"
-              />
+                label="Dog-Food" />
             </RadioGroup>
           </FormControl>
           <br />
@@ -126,19 +137,18 @@ function AddCoupon() {
             })}
             label="title"
             variant="standard"
-            placeholder="title of coupon"
-          />
+            placeholder="title of coupon" />
           {errors.title && <span>{errors.title.message}</span>}
           <br />
           <SubtitlesIcon></SubtitlesIcon>
           <TextField
-            {...register("description", { required: "this is required",
-            minLength: { value: 4, message: "Min length is 4" },
-          })}
+            {...register("description", {
+              required: "this is required",
+              minLength: { value: 4, message: "Min length is 4" },
+            })}
             label="description"
             variant="standard"
-            placeholder="more details about it"
-          />
+            placeholder="more details about it" />
           {errors.description && <span>{errors.description.message}</span>}
           <br />
           <CalendarMonthIcon></CalendarMonthIcon>
@@ -146,8 +156,7 @@ function AddCoupon() {
             {...register("startDate", { required: "this is required" })}
             label="start date"
             variant="standard"
-            placeholder="yyyy-mm-dd"
-          />
+            placeholder="yyyy-mm-dd" />
           {errors.startDate && <span>{errors.startDate.message}</span>}
           <br />
           <LockClockIcon></LockClockIcon>
@@ -155,8 +164,7 @@ function AddCoupon() {
             {...register("endDate", { required: "this is required" })}
             label="end date"
             variant="standard"
-            placeholder="yyyy-mm-dd"
-          />
+            placeholder="yyyy-mm-dd" />
           {errors.endDate && <span>{errors.endDate.message}</span>}
           <br />
           <InventoryIcon></InventoryIcon>
@@ -164,8 +172,7 @@ function AddCoupon() {
             {...register("amount", { required: "this is required" })}
             label="amount"
             variant="standard"
-            placeholder="insert the max amount"
-          />
+            placeholder="insert the max amount" />
           {errors.amount && <span>{errors.amount.message}</span>}
           <br />
           <MonetizationOnIcon></MonetizationOnIcon>
@@ -173,8 +180,7 @@ function AddCoupon() {
             {...register("price", { required: "this is required" })}
             label="price"
             variant="standard"
-            placeholder="00.00 format"
-          />
+            placeholder="00.00 format" />
           {errors.price && <span>{errors.price.message}</span>}
           <br />
           <PhotoSizeSelectActualIcon></PhotoSizeSelectActualIcon>
@@ -182,8 +188,7 @@ function AddCoupon() {
             {...register("image", { required: "this is required" })}
             label="image url"
             variant="standard"
-            placeholder="insert link to the image"
-          />
+            placeholder="insert link to the image" />
           {errors.image && <span>{errors.image.message}</span>}
           <br />
           <br />
@@ -196,7 +201,9 @@ function AddCoupon() {
           </Button>
         </form>
       </Box>
-    </Container>
+    </Container><Message isError={isError} error={error} onClickHandle={() => setIsError(false)} />
+    <Success isSuccess={isSuccess} success={success} onClickHandle={()=>setIsSuccess(false)}/>  
+    </>
   );
 }
 

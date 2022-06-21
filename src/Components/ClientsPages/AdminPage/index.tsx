@@ -6,6 +6,7 @@ import AllCompanies from "./Actions/AllCompanies";
 import AllCustomers from "./Actions/AllCustomers";
 import CompanyCoupons from "./Actions/CompanyCoupons";
 import CustomerCoupons from "./Actions/CustomerCoupons";
+import Delete from "./Actions/Delete/Delete";
 import OneCompany from "./Actions/OneCompany";
 import OneCustomer from "./Actions/OneCustomer";
 import UpdateCompany from "./Actions/UpdateCompany";
@@ -66,6 +67,7 @@ function AdminPage({ match }: any) {
           component={UpdateCustomer}
         />
         <Route path={`${match.path}/update`} exact component={UpdateNav} />
+        <Route path={`${match.path}/delete`} exact component={Delete} />
       </Switch>
     </>
   );

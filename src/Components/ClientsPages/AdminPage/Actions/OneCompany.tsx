@@ -15,12 +15,16 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import CompanyModel from "../../../../Model/CompanyModel";
+import MsgModel from "../../../../Model/MsgModel";
 import globals from "../../../../Utils/globals";
+import Message from "../../../Message/Message";
 
 function OneCompany() {
   const [companyId, setId] = useState<number>(0);
   const [company, setCompany] = useState<CompanyModel>();
   const [showResults, setShowResults] = useState(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error,setError] = useState<MsgModel>();  
   const Results = () => (
     <div id="results" className="search-results">
       <hr />
@@ -68,11 +72,15 @@ function OneCompany() {
         setShowResults(true);
       })
       .catch((error) => {
-        console.log(error.response.data);
-        console.error(error.response.data);
-        console.error(error.response.status);
-        setShowResults(false);
-        //notify.error(response.data.description);
+           console.log(error.response.data);
+            const Error: MsgModel = {
+              status: error.response.status,
+              error: error.response.data.error,
+              description: error.response.data.description
+            }
+            setError(Error);
+            setIsError(true);
+            setShowResults(false);
       });
   };
   return (
@@ -120,6 +128,7 @@ function OneCompany() {
         </Container>
       </div>
       <div>{showResults && <Results />}</div>
+      <Message isError={isError} error={error} onClickHandle={()=>setIsError(false)}/>
     </>
   );
 }
